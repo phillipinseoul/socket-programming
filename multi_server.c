@@ -1,5 +1,6 @@
 /*
-File name: multi_server.c
+* File name: multi_server.c
+* Compile code: gcc multi_server.c -o server -pthread
 */
 #include <stdio.h>
 #include <stdlib.h>
