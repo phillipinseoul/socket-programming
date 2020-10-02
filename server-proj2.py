@@ -7,13 +7,12 @@ HEADER = 64
 # Define a port to run the program on.
 PORT = 5050
 # Put in my computer's IP address
-# SERVER = "192.168.25.22"
-SERVER = socket.gethostbyname(socket.gethostname())
+SERVER = "192.168.25.22"
+# SERVER = socket.gethostbyname(socket.gethostname())
 # Binding socket
 ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = '!DISCONNECT'
-
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
@@ -25,11 +24,12 @@ def handle_client(conn, addr):
     connected = True
     while connected:
         msg_length = conn.recv(HEADER).decode(FORMAT)
-        msg_length = int(msg_length)
-        msg = conn.recv(msg_length).decode(FORMAT)
-        if msg == DISCONNECT_MESSAGE:
-            connected = False
-        print(f"[{addr}] {msg}")
+        if msg_length:
+            msg_length = int(msg_length)
+            msg = conn.recv(msg_length).decode(FORMAT)
+            if msg == DISCONNECT_MESSAGE:
+                connected = False
+            print(f"[{addr}] {msg}")
     conn.close()
 
 # Listen
